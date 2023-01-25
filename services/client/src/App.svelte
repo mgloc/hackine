@@ -11,11 +11,11 @@
 	const socket = ioClient(endpoint);
 
 	// Foot variables
-	let maxLeft = 0;
-	let maxRight = 0;
+	let maxLeft = 100;
+	let maxRight = 15;
 
-	let marginLeft = 0;
-	let marginRight = 0;
+	let marginLeft = 20;
+	let marginRight = 5;
 
 	let massRight = 0;
 	let massLeft = 0;
@@ -26,11 +26,11 @@
 	$: leftPercentage =
 		(massLeft / notNullPatientWeight) * 100 > 100
 			? 100
-			: (massLeft / notNullPatientWeight) * 100;
+			: Math.round(massLeft / notNullPatientWeight) * 100;
 	$: rightPercentage =
 		(massRight / notNullPatientWeight) * 100 > 100
 			? 100
-			: (massRight / notNullPatientWeight) * 100;
+			: Math.round(massRight / notNullPatientWeight) * 100;
 
 	let isStarted = false;
 
