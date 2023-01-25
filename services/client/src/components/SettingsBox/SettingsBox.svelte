@@ -30,7 +30,7 @@
 
 <style>
 	.main {
-		width:300px;
+		width:325px;
 		text-align: center;
 		background: linear-gradient(180deg, rgba(217, 217, 217, 0.2) 0%, rgba(217, 217, 217, 0) 100%);
 		border-radius: 39px;

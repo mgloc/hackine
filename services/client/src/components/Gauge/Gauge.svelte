@@ -23,8 +23,8 @@
         <line style="stroke:{percentage >= bottomMargin && percentage <= highMargin ? "#679289" : "#A10202"}"
             x1="97"
             y1="55"
-            x2="{97 - 30 * (Math.cos(Math.PI * 1.5 * (percentage / 100) - Math.PI/4))}"
-            y2="{55 - 30 * (Math.sin(Math.PI * 1.5 * (percentage / 100) - Math.PI/4))}"
+            x2="{97 - 20 * (Math.cos(Math.PI * 1.5 * (percentage / 100) - Math.PI/4))}"
+            y2="{55 - 20 * (Math.sin(Math.PI * 1.5 * (percentage / 100) - Math.PI/4))}"
             stroke="#000"
             stroke-width="3"
             marker-end="url(#{percentage >= bottomMargin && percentage <= highMargin ? "greenArrow" : "redArrow"})" />
@@ -43,6 +43,23 @@
             y2="{55 - 60 * (Math.sin(Math.PI * 1.5 * (highMargin / 100) - Math.PI/4))}"/>
         
         <circle fill="{percentage >= bottomMargin && percentage <= highMargin ? "#679289" : "#A10202"}"cx="97" cy="55" r="5"/>
+
+        <text
+            x="{95 - 40 * (Math.cos(Math.PI * 1.5 * (bottomMargin / 100) - Math.PI/4))}"
+            y={55 - 40 * (Math.sin(Math.PI * 1.5 * (bottomMargin / 100) - Math.PI/4))}
+            style="font-size:5pt"
+            text-anchor="middle"
+            dominant-baseline="middle">
+            {bottomMargin} %
+        </text>
+        <text
+            x="{95 - 40 * (Math.cos(Math.PI * 1.5 * (highMargin / 100) - Math.PI/4))}"
+            y="{55 - 40 * (Math.sin(Math.PI * 1.5 * (highMargin / 100) - Math.PI/4))}"
+            style="font-size:5pt"
+            text-anchor="middle"
+            dominant-baseline="middle">
+            {highMargin} %
+        </text>
     </svg>
     <h1>{percentage}%</h1>
 </div>
