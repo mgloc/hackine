@@ -31,16 +31,17 @@
         <path class="grey" d="M55,90 A55,55 0 1,1 140,90" style="fill:none;"/>
         <path class="inner" d="M55,90 A55,55 0 1,1 140,90" style="fill:none;stroke-dashoffset:{248 * (1 - percentage / 100)};stroke:{percentage >= max - margin && percentage <= max + margin ? "#679289" : "#A10202"}"/>
         <line stroke="black"
-        x1="{97 - 50 * (Math.cos(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4))}"
-        y1="{55 - 50 * (Math.sin(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4))}"
-        x2="{97 - 60 * (Math.cos(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4))}"
-        y2="{55 - 60 * (Math.sin(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4))}"/>
+            x1="{max - margin >= 0 ? 97 - 50 * (Math.cos(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4)) : 97 - 35}"
+            y1="{max - margin >= 0 ? 55 - 50 * (Math.sin(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4)) : 55 + 35}"
+            x2="{max - margin >= 0 ? 97 - 60 * (Math.cos(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4)) : 97 - 42}"
+            y2="{max - margin >= 0 ? 55 - 60 * (Math.sin(Math.PI * 1.5 * ((max - margin) / 100) - Math.PI/4)) : 55 + 42}"/>
         <line stroke="black"
-        x1="{97 - 50 * (Math.cos(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
-        y1="{55 - 50 * (Math.sin(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
-        x2="{97 - 60 * (Math.cos(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
-        y2="{55 - 60 * (Math.sin(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"/>
-        <circle fill="{percentage >= max - margin && percentage <= max + margin ? "#679289" : "#A10202"}" cx="97" cy="55" r="5"/>
+            x1="{97 - 50 * (Math.cos(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
+            y1="{55 - 50 * (Math.sin(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
+            x2="{97 - 60 * (Math.cos(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"
+            y2="{55 - 60 * (Math.sin(Math.PI * 1.5 * ((max + margin) / 100) - Math.PI/4))}"/>
+        
+        <circle fill="{percentage >= max - margin && percentage <= max + margin ? "#679289" : "#A10202"}"cx="97" cy="55" r="5"/>
     </svg>
     <h1>{percentage}%</h1>
 </div>
