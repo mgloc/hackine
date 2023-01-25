@@ -11,8 +11,8 @@ thread = None
 
 def backgroundThread():
     while True:
-        socketio.emit('leftPercentage', random.randint(0,100))
-        socketio.emit('rightPercentage', random.randint(0,100))
+        socketio.emit('leftWeight', random.randint(0,100))
+        socketio.emit('rightWeight', random.randint(0,100))
         time.sleep(1)
 
 @socketio.on('connect')

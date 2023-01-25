@@ -1,96 +1,136 @@
 <script>
-    import Gauge from "./components/Gauge/Gauge.svelte";
-    import StatusBox from "./components/StatusBox/StatusBox.svelte";
-    import SettingsBox from "./components/SettingsBox/SettingsBox.svelte";
+	import Gauge from "./components/Gauge/Gauge.svelte";
+	import StatusBox from "./components/StatusBox/StatusBox.svelte";
+	import SettingsBox from "./components/SettingsBox/SettingsBox.svelte";
 
-    import ioClient, { io } from "socket.io-client"
-    import { onMount } from "svelte";
-    
-    const endpoint = "http://localhost:5000";
-    
-    const socket = ioClient(endpoint)
+	import ioClient, { io } from "socket.io-client";
+	import { onMount } from "svelte";
 
-    let maxLeft = 0
-    let maxRight = 0
+	const endpoint = "http://localhost:5000";
 
-    let marginLeft = 0
-    let marginRight = 0
+	const socket = ioClient(endpoint);
 
-    let isStarted = false
+	// Foot variables
+	let maxLeft = 0;
+	let maxRight = 0;
 
-    let leftPercentage = 0
-    let rightPercentage = 0
+	let marginLeft = 0;
+	let marginRight = 0;
 
-    function getPercentages() {
-        fetch("./get")
-            .then(d => d.text())
-            .then(d => {
-                let json = JSON.parse(d)
-                leftPercentage = json.leftPercentage
-                rightPercentage = json.rightPercentage
-            })
-    }
+	let massRight = 0;
+	let massLeft = 0;
 
-    function start() {
-        isStarted = true
-        socket.on('leftPercentage', (p) => {
-            leftPercentage = p
-        })
-        socket.on('rightPercentage', (p) => {
-            rightPercentage = p
-        })
-    }
+	let patientWeight = 60;
+	$: notNullPatientWeight = patientWeight > 0 ? patientWeight : 1;
 
-    function end() {
-        isStarted = false
-        socket.removeAllListeners()
-    }
+	$: leftPercentage = massLeft / notNullPatientWeight;
+	$: rightPercentage = massRight / notNullPatientWeight;
 
+	let isStarted = false;
+
+	function start() {
+		isStarted = true;
+		socket.on("leftWeight", (p) => {
+			massLeft = Math.round(p / 1000);
+		});
+		socket.on("rightWeight", (p) => {
+			massRight = Math.round(p / 1000);
+		});
+	}
+
+	function end() {
+		isStarted = false;
+		socket.removeAllListeners();
+	}
 </script>
 
+<div style="margin: 0 5% 0 5%;">
+	<h1>Walk x <span style="color:#679289">Nantes</span></h1>
+
+	<div
+		style="display:flex;justify-content:space-between;margin:auto;margin-top:50px;"
+	>
+		<StatusBox connexionOk={false} balancesOk={false} />
+		<SettingsBox title="CIBLAGE" bind:left={maxLeft} bind:right={maxRight} />
+		<SettingsBox
+			title="MARGE"
+			bind:left={marginLeft}
+			bind:right={marginRight}
+		/>
+	</div>
+	<div style="display:flex;justify-content: center;margin:0">
+		<div style="display:flex;flex-direction: column;align-items: center;">
+			<h3 style="font-weight:400;">Patient weight :</h3>
+			<div style="display:flex;flex-direction: row;gap:10px">
+				<input
+					style="width:60px;text-align: center;"
+					type="number"
+					min="1"
+					max="999"
+					bind:value={patientWeight}
+				/>
+				<h3 style="font-weight:400;">kg</h3>
+			</div>
+		</div>
+	</div>
+
+	<div style="display:flex;justify-content:center;margin-top:10px">
+		<div style="text-align:center;">
+			<img
+				src="./images/LeftFoot.png"
+				style="height: 100px;"
+				alt="Pied gauche"
+			/>
+			<Gauge
+				percentage={leftPercentage}
+				max={maxLeft}
+				bottomMargin={Math.max(maxLeft - marginLeft, 0)}
+				highMargin={Math.min(maxLeft + marginLeft, 100)}
+			/>
+		</div>
+		<div style="text-align:center;">
+			<img
+				src="./images/RightFoot.png"
+				alt="Pied droit"
+				style="height: 100px;"
+			/>
+			<Gauge
+				percentage={rightPercentage}
+				max={maxRight}
+				bottomMargin={Math.max(maxRight - marginRight, 0)}
+				highMargin={Math.min(maxRight + marginRight, 100)}
+			/>
+		</div>
+	</div>
+
+	<div style="text-align:center;margin-top:20px">
+		{#if isStarted}
+			<button style="background-color:#A10202" on:click={() => end()}
+				>Stop</button
+			>
+		{:else}
+			<button style="background-color:#679289" on:click={() => start()}
+				>Start</button
+			>
+		{/if}
+	</div>
+</div>
+
 <style>
+	@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
 
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-    
-    :global(*) {
-        font-family: 'Montserrat', sans-serif;
-    }
+	:global(*) {
+		font-family: "Montserrat", sans-serif;
+	}
 
-    button {
-        border:none;
-        color:white;
-        padding-left:25px;
-        padding-right:25px;
-        padding-top:10px;
-        padding-bottom:10px;
-        border-radius:10px;
-        font-size:15pt;
-    }
+	button {
+		border: none;
+		color: white;
+		padding-left: 25px;
+		padding-right: 25px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		border-radius: 10px;
+		font-size: 15pt;
+	}
 </style>
-
-<h1>Walk x Nantes</h1>
-
-<div style="width:80%;display:flex;justify-content:space-between;margin:auto;margin-top:50px;">
-    <StatusBox connexionOk={false} balancesOk={false}/>
-    <SettingsBox title="CIBLAGE" bind:left={maxLeft} bind:right={maxRight}/>
-    <SettingsBox title="MARGE" bind:left={marginLeft} bind:right={marginRight} />
-</div>
-
-<div style="display:flex;justify-content:center;margin-top:50px">
-    <div style="text-align:center">
-        <img src=./images/LeftFoot.png alt="Pied gauche"/>
-        <Gauge percentage={leftPercentage} max={maxLeft} bottomMargin={Math.max(maxLeft - marginLeft, 0)} highMargin={Math.min(maxLeft + marginLeft, 100)}/>
-    </div>
-    <div style="text-align:center">
-        <img src="./images/RightFoot.png" alt="Pied droit"/>
-        <Gauge percentage={rightPercentage} max={maxRight} bottomMargin={Math.max(maxRight - marginRight, 0)} highMargin={Math.min(maxRight + marginRight, 100)}/>
-    </div>
-</div>
-
-<div style="text-align:center;margin-top:20px">
-    {#if isStarted}
-        <button style="background-color:#A10202" on:click={() => end()}>Stop</button>
-    {:else}
-        <button style="background-color:#679289" on:click={() => start()}>Start</button>
-    {/if}
-</div>
