@@ -3,6 +3,13 @@
     import StatusBox from "./components/StatusBox/StatusBox.svelte";
     import SettingsBox from "./components/SettingsBox/SettingsBox.svelte";
 
+    import ioClient, { io } from "socket.io-client"
+    import { onMount } from "svelte";
+    
+    const endpoint = "http://localhost:5000";
+    
+    const socket = ioClient(endpoint)
+
     let maxLeft = 0
     let maxRight = 0
 
@@ -22,6 +29,21 @@
                 leftPercentage = json.leftPercentage
                 rightPercentage = json.rightPercentage
             })
+    }
+
+    function start() {
+        isStarted = true
+        socket.on('leftPercentage', (p) => {
+            leftPercentage = p
+        })
+        socket.on('rightPercentage', (p) => {
+            rightPercentage = p
+        })
+    }
+
+    function end() {
+        isStarted = false
+        socket.removeAllListeners()
     }
 
 </script>
@@ -67,12 +89,8 @@
 
 <div style="text-align:center;margin-top:20px">
     {#if isStarted}
-        <button style="background-color:#A10202" on:click={() => isStarted = false}>Stop</button>
+        <button style="background-color:#A10202" on:click={() => end()}>Stop</button>
     {:else}
-        <button style="background-color:#679289" on:click={() =>
-        {
-            isStarted = true
-            getPercentages()
-        }}>Start</button>
+        <button style="background-color:#679289" on:click={() => start()}>Start</button>
     {/if}
 </div>
