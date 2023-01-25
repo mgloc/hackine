@@ -79,11 +79,11 @@
 <div style="display:flex;justify-content:center;margin-top:50px">
     <div style="text-align:center">
         <img src=./images/LeftFoot.png alt="Pied gauche"/>
-        <Gauge percentage={leftPercentage} max={maxLeft} margin={marginLeft}/>
+        <Gauge percentage={leftPercentage} max={maxLeft} bottomMargin={Math.max(maxLeft - marginLeft, 0)} highMargin={Math.min(maxLeft + marginLeft, 100)}/>
     </div>
     <div style="text-align:center">
         <img src="./images/RightFoot.png" alt="Pied droit"/>
-        <Gauge percentage={rightPercentage} max={maxRight} margin={marginRight}/>
+        <Gauge percentage={rightPercentage} max={maxRight} bottomMargin={Math.max(maxRight - marginRight, 0)} highMargin={Math.min(maxRight + marginRight, 100)}/>
     </div>
 </div>
 

@@ -9,7 +9,7 @@
 	<h2>{title}</h2>
 	<div class="content">
 		<div class="el">
-			<h3>Jambe droite</h3>
+			<h3>Jambe gauche</h3>
             <div class="settings">
                 <button on:click={() => {if(left > 0) left -= 5}}>-</button>
                 {left}%
@@ -18,7 +18,7 @@
 		</div>
 		
 		<div class="el">
-			<h3>Jambe gauche</h3>
+			<h3>Jambe droite</h3>
             <div class="settings">
                 <button on:click={() => {if(right > 0) right -= 5}}>-</button>
                 {right}%
