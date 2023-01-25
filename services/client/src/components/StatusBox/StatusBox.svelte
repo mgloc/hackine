@@ -59,6 +59,9 @@
 	}
 
 	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
 		margin: auto;
 		margin-top: 10px;
 		width: 80%;
@@ -70,7 +73,7 @@
 	}
 
 	.el h3 {
-		margin-top: 0;
+		margin: 0;
 		font-weight: 400;
 	}
 </style>
