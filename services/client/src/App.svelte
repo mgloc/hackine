@@ -26,11 +26,11 @@
 	$: leftPercentage =
 		(massLeft / notNullPatientWeight) * 100 > 100
 			? 100
-			: Math.round(massLeft / notNullPatientWeight) * 100;
+			: Math.round((massLeft / notNullPatientWeight) * 100);
 	$: rightPercentage =
 		(massRight / notNullPatientWeight) * 100 > 100
 			? 100
-			: Math.round(massRight / notNullPatientWeight) * 100;
+			: Math.round((massRight / notNullPatientWeight) * 100);
 
 	let isStarted = false;
 
