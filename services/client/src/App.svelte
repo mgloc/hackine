@@ -37,9 +37,11 @@
 	function start() {
 		isStarted = true;
 		socket.on("leftWeight", (p) => {
+			p = p >= 0 ? p : 0;
 			massLeft = Math.round(p / 1000);
 		});
 		socket.on("rightWeight", (p) => {
+			p = p >= 0 ? p : 0;
 			massRight = Math.round(p / 1000);
 		});
 	}
