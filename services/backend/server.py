@@ -33,9 +33,8 @@ def backgroundThread():
             
         if(message.startswith("D")):
             temp = message[2:].split(":")
-            print(temp)
             socketio.emit('leftWeight', temp[0])
-            socketio.emit('rightWeightht', temp[1])
+            socketio.emit('rightWeight', temp[1])
 
 @socketio.on('connect')
 def connect():
