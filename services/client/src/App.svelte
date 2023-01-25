@@ -1,10 +1,7 @@
 <script>
-    import Gauge from "../components/Gauge/Gauge.svelte";
-    import StatusBox from "../components/StatusBox/StatusBox.svelte";
-    import SettingsBox from "../components/SettingsBox/SettingsBox.svelte";
-
-    import RightFoot from "$lib/RightFoot.png"
-    import LeftFoot from "$lib/LeftFoot.png"
+    import Gauge from "./components/Gauge/Gauge.svelte";
+    import StatusBox from "./components/StatusBox/StatusBox.svelte";
+    import SettingsBox from "./components/SettingsBox/SettingsBox.svelte";
 
     let maxLeft = 0
     let maxRight = 0
@@ -13,6 +10,19 @@
     let marginRight = 0
 
     let isStarted = false
+
+    let leftPercentage = 0
+    let rightPercentage = 0
+
+    function getPercentages() {
+        fetch("./get")
+            .then(d => d.text())
+            .then(d => {
+                let json = JSON.parse(d)
+                leftPercentage = json.leftPercentage
+                rightPercentage = json.rightPercentage
+            })
+    }
 
 </script>
 
@@ -46,12 +56,12 @@
 
 <div style="display:flex;justify-content:center;margin-top:50px">
     <div style="text-align:center">
-        <img src={LeftFoot} alt="Pied gauche"/>
-        <Gauge percentage={15} max={maxLeft}/>
+        <img src=./images/LeftFoot.png alt="Pied gauche"/>
+        <Gauge percentage={leftPercentage} max={maxLeft}/>
     </div>
     <div style="text-align:center">
-        <img src={RightFoot} alt="Pied droit"/>
-        <Gauge percentage={90} max={maxRight}/>
+        <img src="./images/RightFoot.png" alt="Pied droit"/>
+        <Gauge percentage={rightPercentage} max={maxRight}/>
     </div>
 </div>
 
@@ -59,6 +69,10 @@
     {#if isStarted}
         <button style="background-color:#A10202" on:click={() => isStarted = false}>Stop</button>
     {:else}
-        <button style="background-color:#679289" on:click={() => isStarted = true}>Start</button>
+        <button style="background-color:#679289" on:click={() =>
+        {
+            isStarted = true
+            getPercentages()
+        }}>Start</button>
     {/if}
 </div>

@@ -3,8 +3,8 @@
 	export let balancesOk = false 
 
 
-	const greentickUrl = new URL("./public/greentick.svg", import.meta.url).href
-	const redcrossUrl = new URL("./public/redcross.svg", import.meta.url).href
+	const greentickUrl = "./images/greentick.svg"
+	const redcrossUrl = "./images/redcross.svg"
 </script>
 
 <div class="main">
