@@ -23,8 +23,8 @@
 	let patientWeight = 60;
 	$: notNullPatientWeight = patientWeight > 0 ? patientWeight : 1;
 
-	$: leftPercentage = massLeft / notNullPatientWeight;
-	$: rightPercentage = massRight / notNullPatientWeight;
+	$: leftPercentage = (massLeft / notNullPatientWeight) * 100;
+	$: rightPercentage = (massRight / notNullPatientWeight) * 100;
 
 	let isStarted = false;
 
