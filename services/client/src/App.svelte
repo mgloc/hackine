@@ -56,7 +56,7 @@
 	<div
 		style="display:flex;justify-content:space-between;margin:auto;margin-top:50px;"
 	>
-		<StatusBox connexionOk={false} balancesOk={false} />
+		<StatusBox connexionOk={true} balancesOk={true} balancesMainsOk={false} />
 		<SettingsBox title="CIBLAGE" bind:left={maxLeft} bind:right={maxRight} />
 		<SettingsBox
 			title="MARGE"
@@ -83,6 +83,14 @@
 	<div style="display:flex;justify-content:center;margin-top:10px">
 		<div style="text-align:center;">
 			<img
+				src="./images/LeftHand.png"
+				style="height: 90px;"
+				alt="Pied gauche"
+			/>
+			<Gauge />
+		</div>
+		<div style="text-align:center;">
+			<img
 				src="./images/LeftFoot.png"
 				style="height: 100px;"
 				alt="Pied gauche"
@@ -106,6 +114,14 @@
 				bottomMargin={Math.max(maxRight - marginRight, 0)}
 				highMargin={Math.min(maxRight + marginRight, 100)}
 			/>
+		</div>
+		<div style="text-align:center;">
+			<img
+				src="./images/RightHand.png"
+				style="height: 90px;"
+				alt="Pied gauche"
+			/>
+			<Gauge />
 		</div>
 	</div>
 
