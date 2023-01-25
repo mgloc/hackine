@@ -1,19 +1,41 @@
 from flask import Flask, send_from_directory
 from flask_socketio import SocketIO
 import time
-
-import random
+import serial
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app,cors_allowed_origins="*")
 thread = None
 
+
 def backgroundThread():
+    ser = serial.Serial()
+    ser.port = 'COM12'
+    if not ser.isOpen():
+        ser.open()
     while True:
-        socketio.emit('leftWeight', random.randint(0,100))
-        socketio.emit('rightWeight', random.randint(0,100))
-        time.sleep(1)
+        message = ser.readline().decode('utf-8').replace('\r\n', '')
+    
+        if(message == "MASS"):
+            ser.write(b'656')
+            ser.flushInput()
+
+        if(message == "LEFT"):
+            input("LEFT:") 
+            ser.write(b'\n')
+            ser.flushInput()
+
+        if(message == "RIGHT"):
+            input("RIGHT:") 
+            ser.write(b'\n')
+            ser.flushInput()
+            
+        if(message.startswith("D")):
+            temp = message[2:].split(":")
+            print(temp)
+            socketio.emit('leftWeight', temp[0])
+            socketio.emit('rightWeightht', temp[1])
 
 @socketio.on('connect')
 def connect():
