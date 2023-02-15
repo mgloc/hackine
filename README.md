@@ -16,7 +16,7 @@
   <h3 align="center"><strong>Hackiné</strong></h3>
 
   <p align="center">
-    Prototype proposé au marathon d'innovation en santé Hacking Health 2023 à Nantes
+    Prototype proposé au marathon d'innovation en santé Hacking Health 2023 à Nantes et <a href="https://www.linkedin.com/feed/update/urn:li:activity:7026592944421826560//">prix du public</a>
     <br />
     <br />
     <a href="https://hacking-health.org/nantes/"><strong>Voir l'événement »</strong></a>
